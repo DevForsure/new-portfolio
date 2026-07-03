@@ -1,3 +1,5 @@
+import { useTheme } from '../context/ThemeContext';
+
 const services = [
   {
     id: 1,
@@ -44,20 +46,34 @@ const services = [
 ];
 
 const Services = () => {
+  const { dark } = useTheme();
+
   return (
     <main className="min-h-screen px-6 py-20 max-w-5xl mx-auto">
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Services</h1>
-      <p className="text-gray-400 mb-12 text-lg">What I can do for you.</p>
+      <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${dark ? 'text-white' : 'text-gray-900'}`}>
+        Services
+      </h1>
+      <p className={`mb-12 text-lg ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
+        What I can do for you.
+      </p>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
           <div
             key={service.id}
-            className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-violet-500/50 hover:-translate-y-1 transition-all duration-300"
+            className={`border rounded-xl p-6 hover:border-violet-500/50 hover:-translate-y-1 transition-all duration-300 ${
+              dark
+                ? 'bg-white/5 border-white/10'
+                : 'bg-white border-gray-200 shadow-sm hover:shadow-md'
+            }`}
           >
             <div className="text-4xl mb-4">{service.icon}</div>
-            <h2 className="text-lg font-semibold text-white mb-2">{service.title}</h2>
-            <p className="text-gray-400 text-sm leading-relaxed">{service.description}</p>
+            <h2 className={`text-lg font-semibold mb-2 ${dark ? 'text-white' : 'text-gray-900'}`}>
+              {service.title}
+            </h2>
+            <p className={`text-sm leading-relaxed ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
+              {service.description}
+            </p>
           </div>
         ))}
       </div>

@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const { dark } = useTheme();
 
   const handleChange = useCallback((e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -13,23 +15,41 @@ const Contact = () => {
     setSubmitted(true);
   }, []);
 
+  const inputClass = `w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-violet-500 transition-colors ${
+    dark
+      ? 'bg-white/5 border-white/10 text-white placeholder-gray-600'
+      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
+  }`;
+
+  const labelClass = `block text-sm mb-1 ${dark ? 'text-gray-400' : 'text-gray-600'}`;
+
   return (
     <main className="min-h-screen px-6 py-20 max-w-2xl mx-auto">
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact</h1>
-      <p className="text-gray-400 mb-10 text-lg">
+      <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${dark ? 'text-white' : 'text-gray-900'}`}>
+        Contact
+      </h1>
+      <p className={`mb-10 text-lg ${dark ? 'text-gray-400' : 'text-gray-600'}`}>
         Have a project in mind? Let's talk.
       </p>
 
       {submitted ? (
-        <div className="bg-violet-500/20 border border-violet-500/40 rounded-xl p-8 text-center text-white">
+        <div
+          className={`border rounded-xl p-8 text-center ${
+            dark
+              ? 'bg-violet-500/20 border-violet-500/40 text-white'
+              : 'bg-violet-50 border-violet-200 text-gray-900'
+          }`}
+        >
           <div className="text-4xl mb-3">🎉</div>
           <h2 className="text-xl font-semibold mb-2">Message Sent!</h2>
-          <p className="text-gray-400">Thanks for reaching out. I'll get back to you soon.</p>
+          <p className={dark ? 'text-gray-400' : 'text-gray-600'}>
+            Thanks for reaching out. I'll get back to you soon.
+          </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
-            <label className="block text-sm text-gray-400 mb-1" htmlFor="name">
+            <label className={labelClass} htmlFor="name">
               Name
             </label>
             <input
@@ -40,12 +60,12 @@ const Contact = () => {
               value={form.name}
               onChange={handleChange}
               placeholder="Your name"
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-violet-500 transition-colors"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1" htmlFor="email">
+            <label className={labelClass} htmlFor="email">
               Email
             </label>
             <input
@@ -56,12 +76,12 @@ const Contact = () => {
               value={form.email}
               onChange={handleChange}
               placeholder="your@email.com"
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-violet-500 transition-colors"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1" htmlFor="message">
+            <label className={labelClass} htmlFor="message">
               Message
             </label>
             <textarea
@@ -72,7 +92,7 @@ const Contact = () => {
               value={form.message}
               onChange={handleChange}
               placeholder="Tell me about your project..."
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-violet-500 transition-colors resize-none"
+              className={`${inputClass} resize-none`}
             />
           </div>
 

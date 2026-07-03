@@ -13,7 +13,7 @@ function AppContent() {
   const { dark } = useTheme();
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${dark ? 'bg-gray-950' : 'bg-gray-100'}`}>
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${dark ? 'bg-gray-950' : 'bg-slate-50'}`}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

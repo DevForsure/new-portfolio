@@ -37,21 +37,30 @@ const Navbar = () => {
 
   const navClass = `sticky top-0 z-50 border-b transition-all duration-300 ${
     scrolled
-      ? 'backdrop-blur-md bg-gray-950/90 border-white/10 shadow-lg shadow-black/20'
+      ? dark
+        ? 'backdrop-blur-md bg-gray-950/90 border-white/10 shadow-lg shadow-black/20'
+        : 'backdrop-blur-md bg-white/90 border-gray-200 shadow-lg shadow-gray-200/40'
       : 'bg-transparent border-transparent'
   }`;
 
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors duration-200 ${
-      isActive ? 'text-violet-400' : 'text-gray-400 hover:text-white'
+      isActive
+        ? 'text-violet-500'
+        : dark
+        ? 'text-gray-400 hover:text-white'
+        : 'text-gray-500 hover:text-gray-900'
     }`;
 
   return (
     <nav className={navClass} ref={menuRef}>
       <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
 
-        <NavLink to="/" className="text-white font-bold text-xl tracking-tight">
-          Yash<span className="text-violet-400">.</span>
+        <NavLink
+          to="/"
+          className={`font-bold text-xl tracking-tight ${dark ? 'text-white' : 'text-gray-900'}`}
+        >
+          Yash<span className="text-violet-500">.</span>
         </NavLink>
 
         <ul className="hidden md:flex items-center gap-6">
@@ -67,14 +76,14 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="text-gray-400 hover:text-white transition-colors text-lg"
+            className={`transition-colors text-lg ${dark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
             title="Toggle Theme"
           >
             {dark ? '☀️' : '🌙'}
           </button>
 
           <button
-            className="md:hidden text-gray-400 hover:text-white transition-colors"
+            className={`md:hidden transition-colors ${dark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
             onClick={() => setMenuOpen((prev) => !prev)}
           >
             {menuOpen ? '✕' : '☰'}
@@ -83,7 +92,11 @@ const Navbar = () => {
       </div>
 
       {menuOpen && (
-        <ul className="md:hidden flex flex-col gap-3 px-6 pb-4">
+        <ul
+          className={`md:hidden flex flex-col gap-3 px-6 pb-4 ${
+            dark ? 'bg-gray-950' : 'bg-white border-t border-gray-100'
+          }`}
+        >
           {links.map(({ to, label }) => (
             <li key={to}>
               <NavLink
